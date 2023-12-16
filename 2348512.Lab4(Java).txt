@@ -1,0 +1,46 @@
+﻿// Abstract Robber class
+abstract class Robber {
+    abstract int RowHouses(int[] money);
+    abstract int RoundHouses(int[] money);
+    abstract int SquareHouse(int[] money);
+    abstract int MultiHouseBuilding(int[] money);
+  
+    // Default method
+    void MachineLearning() {
+        System.out.println("I love MachineLearning.");
+    }
+  
+    // Method printing "MScAI&ML"
+    void RobbingClass() {
+        System.out.println("MScAI&ML");
+    }
+}
+
+
+// JAVAProfessionalRobber class inheriting from Robber
+class JAVAProfessionalRobber extends Robber {
+    @Override
+    int RowHouses(int[] money) {
+       
+        return 0; 
+    }
+
+
+    @Override
+    int RoundHouses(int[] money) {
+        
+        return 0;
+    }
+
+
+    @Override
+    int SquareHouse(int[] money) {
+               return 0; 
+    }
+
+
+    @Override
+    int MultiHouseBuilding(int[] money) {
+                return 0; 
+    }
+}
