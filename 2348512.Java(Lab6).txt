@@ -1,0 +1,76 @@
+﻿import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+
+
+public class CoinCombinations {
+    static int countCoinCombinations(int[] coins, int sum) {
+        int n = coins.length;
+        int[] dp = new int[sum + 1];
+        dp[0] = 1;
+       
+        for (int coin : coins) {
+            for (int j = coin; j <= sum; j++) {
+                dp[j] += dp[j - coin];
+            }
+        }
+       
+        return dp[sum];
+    }
+
+
+    public static void main(String[] args) {
+        try (Scanner Scanner = new Scanner(System.in)) {
+            System.out.print("Enter the size of the coin array: ");
+            int N = Scanner.nextInt();
+            int[] coins = new int[N];
+            System.out.println("Enter the denominations of the coins:");
+            for (int i = 0; i < N; i++) {
+                coins[i] = Scanner.nextInt();
+            }
+           
+            System.out.print("Enter the target sum: ");
+            int sum = Scanner.nextInt();
+           
+            ExecutorService executor = Executors.newFixedThreadPool(N);
+            int[] results = new int[N];
+           
+            for (int i = 0; i < N; i++) {
+                int finalI = i;
+                executor.submit(() -> {
+                    results[finalI] = countCoinCombinations(Arrays.copyOfRange(coins, finalI, N), sum);
+                });
+            }
+            executor.shutdown();
+           
+            try {
+                executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+            } catch (InterruptedException e) {
+                System.out.println("Calculation interrupted.");
+            }
+           
+            int totalWays = 0;
+            for (int result : results) {
+                totalWays += result;
+            }
+           
+            System.out.println("Total ways to make the sum: " + totalWays);
+        }
+    }
+}
+
+
+
+
+
+
+Output:
+
+
+Enter the size of the coin array: 3
+Enter the denominations of the coins:
+1 2 3
+Enter the target sum: 4
+Total ways to make the sum: 5
